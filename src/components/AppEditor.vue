@@ -26,7 +26,7 @@ import useReader from '@/hooks/use-reader';
 
 const filters = ['oceanic', 'vintage', 'rosetint'];
 const store = useImageStore();
-const { canvasEl, loadImage } = useCanvas();
+const { canvasEl, loadImage, drawOriginalImage, filterImage } = useCanvas();
 
 const reader = useReader(store.file, () => {
   if (!reader.result) {
@@ -35,5 +35,10 @@ const reader = useReader(store.file, () => {
 
   const dataURL = reader.result.toString();
   loadImage(dataURL);
+});
+
+store.$subscribe((mutation, state) => {
+  drawOriginalImage();
+  filterImage(state.filter);
 });
 </script>
