@@ -1,6 +1,6 @@
 <template>
   <div class="my-8">
-    <canvas width="448" height="448"></canvas>
+    <canvas ref="canvasEl" width="448" height="448"></canvas>
     <div class="text-white text-xl mt-4">
       <div class="flex justify-center gap-4">
         <button
@@ -21,10 +21,13 @@
 
 <script setup lang="ts">
 import { useImageStore } from '@/stores/image.js';
+import useCanvas from '@/hooks/use-canvas';
 import useReader from '@/hooks/use-reader';
 
 const filters = ['oceanic', 'vintage', 'rosetint'];
 const store = useImageStore();
+const { canvasEl, loadImage } = useCanvas();
+
 const reader = useReader(store.file, () => {
   if (!reader.result) {
     return;
@@ -32,5 +35,6 @@ const reader = useReader(store.file, () => {
 
   const dataURL = reader.result.toString();
   console.log('dataURL ->', dataURL);
+  loadImage(dataURL);
 });
 </script>
