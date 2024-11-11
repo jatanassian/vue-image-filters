@@ -34,7 +34,6 @@ const reader = useReader(store.file, () => {
   }
 
   const dataURL = reader.result.toString();
-  console.log('dataURL ->', dataURL);
   loadImage(dataURL);
 });
 </script>

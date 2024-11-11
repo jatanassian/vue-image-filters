@@ -17,7 +17,28 @@ export default function useCanvas() {
   function drawOriginalImage() {
     if (!canvasContext || !canvasEl.value) return;
 
-    canvasContext.drawImage(imageEl, 0, 0);
+    const imgDimensions = calculateAspectRatio(
+      imageEl.naturalWidth,
+      imageEl.naturalHeight,
+      448,
+      448
+    );
+
+    canvasEl.value.width = imgDimensions.width;
+    canvasEl.value.height = imgDimensions.height;
+
+    canvasContext.drawImage(imageEl, 0, 0, imgDimensions.width, imgDimensions.height);
+  }
+
+  function calculateAspectRatio(
+    srcWidth: number,
+    srcHeight: number,
+    maxWidth: number,
+    maxHeight: number
+  ) {
+    const ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+
+    return { width: srcWidth * ratio, height: srcHeight * ratio };
   }
 
   return { loadImage, canvasEl };
