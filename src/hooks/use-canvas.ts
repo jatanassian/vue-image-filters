@@ -5,6 +5,7 @@ export default function useCanvas() {
   const canvasEl = ref<HTMLCanvasElement | null>(null);
   let canvasContext: CanvasRenderingContext2D | null = null;
   const imageEl = new Image();
+  const canvasImgURL = ref('');
 
   function loadImage(url: string) {
     if (!canvasEl.value) return;
@@ -29,6 +30,8 @@ export default function useCanvas() {
     canvasEl.value.height = imgDimensions.height;
 
     canvasContext.drawImage(imageEl, 0, 0, imgDimensions.width, imgDimensions.height);
+
+    canvasImgURL.value = canvasEl.value.toDataURL();
   }
 
   function calculateAspectRatio(
@@ -52,7 +55,9 @@ export default function useCanvas() {
     }
 
     putImageData(canvasEl.value, canvasContext, photonImage);
+
+    canvasImgURL.value = canvasEl.value.toDataURL();
   }
 
-  return { loadImage, canvasEl, drawOriginalImage, filterImage };
+  return { loadImage, canvasEl, drawOriginalImage, filterImage, canvasImgURL };
 }

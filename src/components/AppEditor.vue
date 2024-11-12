@@ -14,7 +14,13 @@
           {{ filter }}
         </button>
       </div>
-      <a class="bg-indigo-700 py-4 block w-full mt-2 text-center"> Download </a>
+      <a
+        class="bg-indigo-700 py-4 block w-full mt-2 text-center"
+        :href="canvasImgURL"
+        download="image.png"
+      >
+        Download
+      </a>
     </div>
   </div>
 </template>
@@ -26,7 +32,7 @@ import useReader from '@/hooks/use-reader';
 
 const filters = ['oceanic', 'vintage', 'rosetint'];
 const store = useImageStore();
-const { canvasEl, loadImage, drawOriginalImage, filterImage } = useCanvas();
+const { canvasEl, loadImage, drawOriginalImage, filterImage, canvasImgURL } = useCanvas();
 
 const reader = useReader(store.file, () => {
   if (!reader.result) {
